@@ -37,23 +37,23 @@ $large-line-height: 1.44;
 $base-gap: 5rem;
 $large-base-gap: 0.94rem;
 
-//Grid
+
 $large: 759px;
 
-// $padding: 30.56rem;
+
 $padding: 30.56rem;
 
 $padding-large: 14.06rem;
 
-/* Scrollbar ausblenden */
+
 ::-webkit-scrollbar {
-    display: none; /* Für WebKit-basierte Browser */
+    display: none; 
 }
 
-/* Für alle anderen Browser */
+
 html {
-    scrollbar-width: none; /* Für Firefox */
-    -ms-overflow-style: none; /* Für Internet Explorer und Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
 }
 
 

@@ -1,4 +1,3 @@
- //Thank you to Dennis Snellenberg (https://dennissnellenberg.com/) for large parts of this code 
  
  gsap.registerPlugin(ScrollTrigger, CustomEase)
   CustomEase.create("custom-ease", ".9, .1, .1, .9");
@@ -144,7 +143,6 @@
       ease: "custom-ease",
     }, 0);
   
-    // Dynamisch den Y-Wert basierend auf der Fensterbreite setzen
     const yValue = window.innerWidth < 760 ? "5vh" : "12vh";
   
     tl.from(".index-header .name .big span", {
@@ -188,7 +186,6 @@
     });
 
     barba.hooks.afterEnter(() => {
-      // Scrollen Sie zum Seitenanfang, wenn keine interne Verlinkung vorliegt
       window.scrollTo(0, 0);
       ScrollTrigger.refresh();
 
@@ -203,24 +200,22 @@
 
 
 
-      // Überprüfen, ob die neue URL einen internen Link enthält
       if (window.location.hash) {
-        const targetId = window.location.hash.substring(1); // Ziel-ID extrahieren
-        const targetElement = document.getElementById(targetId); // Ziel-Element abrufen
+        const targetId = window.location.hash.substring(1); 
+        const targetElement = document.getElementById(targetId); 
         if (targetElement) {
           targetElement.scrollIntoView({
             block: 'start',
           });
           console.log(`Scrolling to anchor ${targetId}`);
 
-          // Überprüfen, ob das Ziel-Element das Attribut [data-trans-id] enthält
+          
           if (targetElement.hasAttribute('data-trans-id')) {
-            const offset = window.innerHeight * 0.75; // 75vh Offset
+            const offset = window.innerHeight * 0.75; 
             window.scrollBy(0, offset);
           }
 
-          // Aktualisieren von LazyLoad und ScrollTrigger
-          return; // Beenden Sie die Funktion, wenn das Scrollen zum Ankerziel erfolgt ist
+          return;
         }
       }
 
@@ -356,19 +351,15 @@
     });
 
 
-    // Textarea-Element auswählen
+    
     const textarea = document.querySelector('textarea');
 
-    // Überprüfen, ob ein Textarea-Element vorhanden ist
     if (textarea) {
-      // Event-Listener hinzufügen, der bei Änderungen im Textarea aufgerufen wird
       textarea.addEventListener('input', function () {
-        // Überprüfen, ob das Scrollen notwendig ist
         if (textarea.scrollHeight > textarea.clientHeight) {
-          // Scrollbalken vorhanden, data-lenis-prevent hinzufügen
           textarea.setAttribute('data-lenis-prevent', '');
         } else {
-          // Kein Scrollbalken vorhanden, data-lenis-prevent entfernen (falls vorhanden)
+          
           textarea.removeAttribute('data-lenis-prevent');
         }
       });
@@ -386,9 +377,7 @@
   }
 
 
-  /**
-   * Fire all scripts on page load
-   */
+  
   function initScript() {
     initScrollTriggerParallaxScroll();
     initializeJarallaxScrolling();
@@ -419,9 +408,9 @@ function marquee() {
     let marqueeSpeed = marquee.attr('data-marquee-speed') * (marqueeItemsWidth / $(window)
       .width());
 
-    // Duplicate .marquee-content
+   
     if (marquee.attr('data-marquee-duplicate') == "3") {
-      // Custom function to clone / append 3x
+      
       for (var i = 0; i < 3; i++) {
         var clonedMarqueeContent = marquee.find(".marquee-content").clone();
         marquee.find(".marquee-scroll").append(clonedMarqueeContent);
@@ -431,7 +420,7 @@ function marquee() {
       marquee.find(".marquee-scroll").append(clonedMarqueeContent);
     }
 
-    // Speed up Marquee on Tablet & Mobile
+    
     if ($(window).width() <= 540) {
       marqueeSpeed = marqueeSpeed * 0.25;
     } else if ($(window).width() <= 1024) {
@@ -480,7 +469,7 @@ function marquee() {
       onLeaveBack: () => marqueeContent.pause()
     });
 
-    // Extra speed on scroll
+    
     marquee.each(function () {
 
       let triggerElement = $(this);
@@ -536,7 +525,7 @@ function initScrollTriggerParallaxScroll() {
               $(this).css("--parallax-height", " " + heightElementParallax + "%");
 
               
-              // Check if [data-parallax-trigger="#header"] exists
+              
               if ($(triggerElementID).length !== 0) {
                  triggerElement = $(document).find(triggerElementID);
               }
@@ -555,7 +544,7 @@ function initScrollTriggerParallaxScroll() {
                  rotate: 0.001,
               });
 
-              // if ($(this).attr('data-parallax-position') == 'top') {}
+              
 
               tl.fromTo(targetElement, {
                  yPercent: (targetElementParallax * -0.5)
@@ -574,7 +563,7 @@ function initResponsiveVideo() {
     const video = document.getElementById("responsive-video");
     
     if (!video) {
-      // Falls kein Element mit ID "responsive-video" vorhanden ist, wird die Funktion beendet.
+      
       return;
     }
   
@@ -589,14 +578,14 @@ function initResponsiveVideo() {
       }
     }
     
-    // Initial load
+    
     setVideoSource();
     
-    // Update on resize
+    
     window.addEventListener('resize', setVideoSource);
   }
   
-  // Call the function
+  
   responsiveVideo();
 }
 
@@ -605,64 +594,64 @@ function lazyLoadImagesWithTriggers() {
   var lazyLoadInstances = [];
 
   var initLazyLoadForTarget = function (triggerElement) {
-    // Hole den Wert von data-lazyload-trigger
+    
     var targetKey = triggerElement.getAttribute("data-lazyload-trigger");
 
-    // Prüfen, ob der Wert existiert
+    
     if (!targetKey) {
       console.error("Kein gültiger data-lazyload-trigger-Wert gefunden:", triggerElement);
       return;
     }
 
-    // Finde alle Elemente mit dem entsprechenden data-lazyload-target
+    
     var targetElements = document.querySelectorAll(`[data-lazyload-target="${targetKey}"]`);
 
-    // Wenn keine Ziel-Elemente gefunden werden
+    
     if (targetElements.length === 0) {
       console.warn(`Keine Zielelemente für Trigger "${targetKey}" gefunden.`);
       return;
     }
 
-    // Erstelle eine neue LazyLoad-Instanz für die Zielelemente
+    
     var oneLazyLoadInstance = new LazyLoad({
       elements_selector: `[data-lazyload-target="${targetKey}"]`,
     });
 
-    // Optional: Speichere die Instanz
+    
     lazyLoadInstances.push(oneLazyLoadInstance);
   };
 
-  // Funktion, um zu prüfen, ob sich der Benutzer unter einem Trigger befindet
+  
   var checkTriggersBelowViewport = function () {
     var triggers = document.querySelectorAll("[data-lazyload-trigger]");
     triggers.forEach(function (triggerElement) {
       var triggerRect = triggerElement.getBoundingClientRect();
 
-      // Prüfen, ob sich der Trigger oberhalb der aktuellen Scroll-Position befindet
+      
       if (triggerRect.bottom < window.innerHeight) {
         initLazyLoadForTarget(triggerElement);
       }
     });
   };
 
-  // Initialisiere LazyLoad für Auslöseelemente (data-lazyload-trigger)
+  
   var lazyLoadTriggers = new LazyLoad({
     elements_selector: "[data-lazyload-trigger]",
     callback_enter: initLazyLoadForTarget,
-    unobserve_entered: true, // Stoppt das Überwachen, sobald das Element sichtbar wurde
+    unobserve_entered: true, 
   });
 
-  // Event-Listener für Scroll-Events hinzufügen
+  
   window.addEventListener("scroll", function () {
     checkTriggersBelowViewport();
   });
 
-  // Initialer Check beim Laden der Seite
+  
   checkTriggersBelowViewport();
 }
 
 function lazyLoadImages() {
-  // Normales Lazy-Loading für Bilder mit der Klasse .lazy
+  
   var lazyLoadInstance = new LazyLoad({
     container: document.querySelector('[data-barba="container"]'),
     elements_selector: ".lazy",
@@ -671,7 +660,7 @@ function lazyLoadImages() {
     }
   });
 
-  // Erweiterte Lazy-Loading-Logik für Trigger- und Ziel-Elemente
+  
   lazyLoadImagesWithTriggers();
 }
 
@@ -685,7 +674,7 @@ function lazyLoadImages() {
       elementsWithFade.forEach(element => {
         const rect = element.getBoundingClientRect();
         if (
-          rect.bottom > 50 && // Änderung hier: Prüfe, ob das Element mindestens 50px unterhalb des Viewports liegt
+          rect.bottom > 50 && 
           rect.right > 0 &&
           rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
           rect.top < (window.innerHeight || document.documentElement.clientHeight)
@@ -702,7 +691,7 @@ function lazyLoadImages() {
           if (targetElement) {
             const rect = targetElement.getBoundingClientRect();
             if (
-              rect.bottom > 50 && // Änderung hier: Prüfe, ob das Element mindestens 50px unterhalb des Viewports liegt
+              rect.bottom > 50 && 
               rect.right > 0 &&
               rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
               rect.top < (window.innerHeight || document.documentElement.clientHeight)
@@ -819,11 +808,11 @@ function lazyLoadImages() {
 
   function initializeGSAPAnimations() {
 
-    // GSAP Start
+    
 
-    //GSAP Mobile Start
+    
     ScrollTrigger.matchMedia({
-      ///GSAP  Mobile START
+      
 
       "(max-width: 760px)": function () {
 
@@ -865,12 +854,12 @@ function lazyLoadImages() {
             .from('.usp-ct.one span', {
               opacity: 0,
               yPercent: 200,
-              stagger: 0.05, // Versatz zwischen den Animationen der einzelnen Elemente
+              stagger: 0.05, 
             })
             .to('.usp-ct.one span', {
               opacity: 0,
               yPercent: -200,
-              stagger: 0.05, // Versatz zwischen den Animationen der einzelnen Elemente
+              stagger: 0.05, 
             })
             .from('.sec-3 .lines-ct .line.one .line-inner', {
               width: 0,
@@ -887,12 +876,12 @@ function lazyLoadImages() {
             .from('.usp-ct.two span', {
               opacity: 0,
               yPercent: 200,
-              stagger: 0.05, // Versatz zwischen den twon der einzelnen Elemente
+              stagger: 0.05, 
             })
             .to('.usp-ct.two span', {
               opacity: 0,
               yPercent: -200,
-              stagger: 0.05, // Versatz zwischen den Animationen der einzelnen Elemente
+              stagger: 0.05, 
             })
             .from('.sec-3 .lines-ct .line.two .line-inner', {
               width: 0,
@@ -900,9 +889,9 @@ function lazyLoadImages() {
         }
 
       },
-      ///GSAP  Mobile END
+      
 
-      ///GSAP  Desktop
+      
       "(min-width: 760px)": function () {
         if (document.querySelector('.sec-3-inner')) {
           gsap.timeline({
@@ -943,12 +932,12 @@ function lazyLoadImages() {
             .from('.usp-ct.one span', {
               opacity: 0,
               yPercent: 150,
-              stagger: 0.05, // Versatz zwischen den Animationen der einzelnen Elemente
+              stagger: 0.05, 
             })
             .to('.usp-ct.one span', {
               opacity: 0,
               yPercent: -120,
-              stagger: 0.05, // Versatz zwischen den Animationen der einzelnen Elemente
+              stagger: 0.05, 
             })
             .from('.sec-3 .lines-ct .line.one .line-inner', {
               height: 0,
@@ -965,12 +954,12 @@ function lazyLoadImages() {
             .from('.usp-ct.two span', {
               opacity: 0,
               yPercent: 150,
-              stagger: 0.05, // Versatz zwischen den twon der einzelnen Elemente
+              stagger: 0.05, 
             })
             .to('.usp-ct.two span', {
               opacity: 0,
               yPercent: -120,
-              stagger: 0.05, // Versatz zwischen den Animationen der einzelnen Elemente
+              stagger: 0.05, 
             })
             .from('.sec-3 .lines-ct .line.two .line-inner', {
               height: 0,
@@ -1097,7 +1086,7 @@ function lazyLoadImages() {
           }, 0);
         }
         
-        // Second Timeline
+        
         if (document.querySelector('.ref-dual-mobile-sec')) {
           gsap.timeline({
             scrollTrigger: {
@@ -1115,7 +1104,7 @@ function lazyLoadImages() {
           }, 0);
         }
         
-        // Third Timeline
+        
         if (document.querySelector('.triple-mobile-sec.ver-2')) {
           gsap.timeline({
             scrollTrigger: {
@@ -1133,7 +1122,7 @@ function lazyLoadImages() {
           }, 0);
         }
         
-        // Fourth Timeline
+        
         if (document.querySelector('.sm-posts-sec.dark-bg')) {
           gsap.timeline({
             scrollTrigger: {
@@ -1151,7 +1140,7 @@ function lazyLoadImages() {
           }, 0);
         }
         
-        // Fifth Timeline
+        
         if (document.querySelector('.sec-2 >.row')) {
           gsap.timeline({
             scrollTrigger: {
@@ -1166,7 +1155,7 @@ function lazyLoadImages() {
           });
         }
         
-        // Sixth Timeline
+        
         if (document.querySelector('.sec-2 >.row')) {
           gsap.timeline({
             scrollTrigger: {
@@ -1183,7 +1172,7 @@ function lazyLoadImages() {
       },
 
       "all": function () {
-        // GSAP All 
+        
         if (document.querySelector('.transition-sec')) {
           const vhshutter = window.innerHeight;
           const triggerOffsetShutterOne = 100 * vhshutter / 100;
@@ -1217,7 +1206,7 @@ function lazyLoadImages() {
           });
         }
         
-        // Additional Conditional Timelines
+        
         if (document.querySelector('.sec-1-inner')) {
           var sec1 = gsap.timeline({
             scrollTrigger: {
@@ -1259,7 +1248,7 @@ function lazyLoadImages() {
           }, 0);
         }
         
-        // Sec-3 Timeline
+        
         if (document.querySelector('.sec-3-inner')) {
           gsap.set(".sec-3", { autoAlpha: 0 });
         
@@ -1289,7 +1278,7 @@ function lazyLoadImages() {
           });
         }
         
-        // Footer Timeline
+        
         if (document.querySelector('.footer-trigger')) {
           gsap.timeline({
             scrollTrigger: {
@@ -1304,7 +1293,7 @@ function lazyLoadImages() {
           });
         }
       }
-      // GSAP All END
+      
 
 
     });
@@ -1313,7 +1302,7 @@ function lazyLoadImages() {
 
   function followCursor() {
     const cursorFollow = document.querySelector(".cursor-follow");
-    if (!cursorFollow) return; // Beende die Funktion, wenn das Element nicht gefunden wurde
+    if (!cursorFollow) return; 
   
     if (window.innerWidth > 759) {
       const span = cursorFollow.querySelector("span");
@@ -1322,7 +1311,7 @@ function lazyLoadImages() {
       let mouseX = 0;
       let mouseY = 0;
   
-      let isHovering = false; // Flag, um zu erkennen, ob ein Hover aktiv ist
+      let isHovering = false; 
   
       const delay = 0.1;
   
@@ -1350,12 +1339,12 @@ function lazyLoadImages() {
         element.addEventListener("mouseover", function () {
           const target = element.getAttribute("data-cursor-target");
   
-          // Verstecke das span-Element, wenn ein target vorhanden ist
+          
           if (target) {
             span.style.display = "none";
           }
   
-          // Zeige das Bild mit passendem data-cursor-content im cursorFollow-Container
+          
           const images = cursorFollow.querySelectorAll("img");
           images.forEach(img => {
             if (img.getAttribute("data-cursor-content") === target) {
@@ -1370,14 +1359,14 @@ function lazyLoadImages() {
           cursorFollow.style.transition = "transform 0.3s";
           cursorFollow.style.transform = "scale(1)";
   
-          // Setze das isHovering-Flag auf true, da der Hover aktiv ist
+          
           isHovering = true;
         });
   
         element.addEventListener("mouseleave", function () {
           const target = element.getAttribute("data-cursor-target");
   
-          // Setze den Cursor-Follow auf scale(0) und verzögere das Verstecken des Bildes um 0.3s
+          
           cursorFollow.style.transition = "transform 0.3s";
           cursorFollow.style.transform = "scale(0)";
   
@@ -1387,21 +1376,21 @@ function lazyLoadImages() {
               img.style.transition = "transform 0.3s";
               img.style.transform = "scale(0)";
   
-              // Verzögere das Verstecken des Bildes
+              
               setTimeout(() => {
                 img.style.display = "none";
               }, 300);
             }
           });
   
-          // Verzögere das Wiederanzeigen des span-Elements nur, wenn kein Hover mehr aktiv ist
+          
           setTimeout(() => {
             if (!isHovering) {
-              span.style.display = "flex"; // Zeige das span-Element wieder an
+              span.style.display = "flex"; 
             }
-          }, 300); // Verzögerung von 0,3 Sekunden, damit der Übergang abgeschlossen ist
+          }, 300); 
   
-          // Setze das isHovering-Flag zurück
+          
           isHovering = false;
         });
       });
@@ -1413,33 +1402,33 @@ function lazyLoadImages() {
 
 
   function setTransitionSectionHeights() {
-    // Verwende die Höhe des Bildschirms als Basis
+    
     var screenHeight = window.screen.height;
   
-    // Wähle alle Elemente mit der Klasse ".transition-sec" aus
+    
     var transitionSecElements = document.querySelectorAll(".transition-sec");
   
-    // Iteriere über jedes Element und setze seine Höhe als Inline-Style
+    
     transitionSecElements.forEach(function (element) {
-      var height = element.clientHeight; // Höhe des Elements
-      height += screenHeight * 1; // Füge die volle Bildschirmhöhe hinzu
-      element.style.height = height + "px"; // Setze die neue Höhe als Inline-Style
+      var height = element.clientHeight; 
+      height += screenHeight * 1; 
+      element.style.height = height + "px"; 
     });
   
-    // Wähle alle Elemente mit der Klasse ".trans-sec-after" aus
+    
     var transSecAfterElements = document.querySelectorAll(".trans-sec-after");
   
-    // Iteriere über jedes Element und setze seine Höhe als Inline-Style
+    
     transSecAfterElements.forEach(function (element) {
-      var height = element.clientHeight; // Höhe des Elements
-      height += screenHeight * 0.5; // Füge 50% der Bildschirmhöhe hinzu
-      element.style.height = height + "px"; // Setze die neue Höhe als Inline-Style
+      var height = element.clientHeight; 
+      height += screenHeight * 0.5; 
+      element.style.height = height + "px"; 
     });
   }
   
 
   function checkDeviceOrientation() {
-    // Code to check device orientation...
+    
     function checkOrientation() {
       const body = document.querySelector("body");
       if (window.matchMedia("(orientation: portrait)").matches) {
@@ -1451,13 +1440,13 @@ function lazyLoadImages() {
       }
     }
 
-    // Event-Listener für Änderungen der Bildschirmausrichtung
+    
     window.addEventListener("orientationchange", checkOrientation);
 
-    // Event-Listener für Änderungen der Fenstergröße
+    
     window.addEventListener("resize", checkOrientation);
 
-    // Überprüfen der Bildschirmausrichtung beim Laden der Seite
+    
     checkOrientation();
   }
   
@@ -1469,15 +1458,15 @@ function lazyLoadImages() {
 
 if (form) {
     form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Verhindert die Weiterleitung zur send_mail.php
+        event.preventDefault(); 
         
-        // Füge dem HTML-Element die Klasse "is-sending-form" hinzu
+        
         document.documentElement.classList.add('is-sending-form');
 
-        // Erstelle ein neues FormData-Objekt aus dem Formular
+        
         const formData = new FormData(form);
 
-        // Sende die Daten mit fetch
+        
         fetch('send_mail.php', {
             method: 'POST',
             body: formData
@@ -1489,21 +1478,21 @@ if (form) {
             return response.text();
         })
         .then(data => {
-            // Entferne die Klasse "is-sending-form"
+            
             document.documentElement.classList.remove('is-sending-form');
             document.querySelector('.form-sent').classList.add('active');
 
-            // Füge nach einer Verzögerung die Klasse "active" zu .form-sent hinzu
-            setTimeout(() => {   
-                // Füge dem HTML die Klasse "open-sent" hinzu
-                document.documentElement.classList.add('open-sent');
-            }, 100); // Ändere die Verzögerungszeit hier entsprechend deiner Anforderungen (in Millisekunden)
             
-            console.log(data); // Optional: Zeige die Antwort an (zum Debuggen)
+            setTimeout(() => {   
+                
+                document.documentElement.classList.add('open-sent');
+            }, 100); 
+            
+            console.log(data); 
         })
         .catch(error => {
             console.error('Error:', error);
-            // Optional: Fehlerbehandlung
+            
         });
     });
 }
@@ -1522,20 +1511,20 @@ function toggleFormSent() {
 }
 
 function removeHtmlExtension() {
-  // Alle Links auf der Seite auswählen
+  
   const links = document.querySelectorAll('a[href]');
 
-  // Iteration über die Links
+  
   links.forEach(link => {
-    // Aktuelles href-Attribut abrufen
+    
     let href = link.getAttribute('href');
 
-    // .html überall im href entfernen
+    
     href = href.replace(/\.html/g, '');
 
-    // "/index" durch "/" ersetzen
+    
     href = href.replace(/\/index/g, '/');
 
-    link.setAttribute('href', href); // Neues href setzen
+    link.setAttribute('href', href); 
   });
 }

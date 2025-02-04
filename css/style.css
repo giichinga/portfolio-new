@@ -1,13 +1,13 @@
 @charset "UTF-8";
-/* Scrollbar ausblenden */
+
 ::-webkit-scrollbar {
-  display: none; /* Für WebKit-basierte Browser */
+  display: none;
 }
 
-/* Für alle anderen Browser */
+
 html {
-  scrollbar-width: none; /* Für Firefox */
-  -ms-overflow-style: none; /* Für Internet Explorer und Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 html.lenis {
@@ -731,11 +731,7 @@ h6,
   line-height: 1em;
   color: #1D1D1D;
   font-size: inherit;
-  /* Use this to let headlines break in Chrome Desktop
-  body.platformWindows.chrome &, body.platformLinux.chrome & {
-      word-break: break-all;
-  }
-  */
+ 
 }
 
 main .line.standard {
@@ -2765,7 +2761,7 @@ footer.project-footer .bottom-footer .bottom-footer-ct .navi-add-ct .line {
   position: sticky;
   width: 100%;
   bottom: 0;
-  /* Hier 100px als Beispielhöhe, ändern Sie es entsprechend Ihrer Anforderungen */
+ 
 }
 .transition-sec .trans-ct {
   position: fixed;
@@ -3433,19 +3429,19 @@ form {
   width: 100%;
 }
 form ::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
+ 
   color: #1D1D1D;
 }
 form ::-moz-placeholder {
-  /* Firefox 19+ */
+ 
   color: #1D1D1D;
 }
 form :-ms-input-placeholder {
-  /* IE 10+ */
+ 
   color: #1D1D1D !important;
 }
 form :-moz-placeholder {
-  /* Firefox 18- */
+ 
   color: #1D1D1D;
 }
 @media (min-width: 759px) {
@@ -4436,4 +4432,4 @@ html.open-sent .form-sent .x .line:last-of-type {
 .script-correction-all-sides {
   padding-block: 0.7em;
   margin-block: -0.7em;
-}/*# sourceMappingURL=style.css.map */
+}
